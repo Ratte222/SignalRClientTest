@@ -26,7 +26,7 @@
         <Button x:Name="disconnectButton" Content="Disconnect" HorizontalAlignment="Left" Margin="275,100,0,0" VerticalAlignment="Top" Width="95" Click="disconnectButton_Click" Height="41" Grid.Column="2" IsEnabled="False"/>
         <TextBox x:Name="chatRelationshipIdTextBox" HorizontalAlignment="Left" Height="41" Margin="0,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="181" Grid.Column="2" Text="1"/>
         <Label Content="ChatRelationshipId" HorizontalAlignment="Left" Height="31" Margin="30,53,0,0" VerticalAlignment="Top" Width="119" Grid.ColumnSpan="2"/>
-        <TextBox x:Name="phoneTextBox" HorizontalAlignment="Left" Height="41" Margin="49,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="216" Grid.Column="1" Grid.ColumnSpan="2" Text="+380671331815"/>
+        <TextBox x:Name="phoneTextBox" HorizontalAlignment="Left" Height="41" Margin="49,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="216" Grid.Column="1" Grid.ColumnSpan="2" Text="+380675555555"/>
         <Label Content="Phone" HorizontalAlignment="Left" Height="31" Margin="30,10,0,0" VerticalAlignment="Top" Width="119" Grid.ColumnSpan="2"/>
         <Button x:Name="authorizeButton" Content="Authorize" HorizontalAlignment="Left" Margin="275,10,0,0" VerticalAlignment="Top" Width="95" Click="authorizeButton_Click" Height="41" Grid.Column="2"/>
         <CheckBox x:Name="sendViaHttpCheckBox" Content="sendViaHttp" HorizontalAlignment="Left" Margin="386,219,0,0" VerticalAlignment="Top" Width="95" Height="17" Grid.Column="2"/>

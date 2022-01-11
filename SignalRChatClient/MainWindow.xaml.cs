@@ -41,6 +41,11 @@ namespace SignalRChatClient
                     options.AccessTokenProvider = () => Task.FromResult(tokenTextBox.Text);
                 })
                 .Build();
+            connection.Closed += async (errore) =>
+            {
+                messagesList.Items.Add(errore.Message);
+                await Connect();
+            };
             #region snippet_ConnectionOn
             connection.On<string, string>("ReceiveMessage", (user, message) =>
             {
@@ -75,9 +80,13 @@ namespace SignalRChatClient
                     messagesList.Items.Add(newMessage);
                 });
             });
+            await Connect();
+        }
+        private async Task Connect()
+        {
             try
             {
-                
+
                 await connection.StartAsync();
                 messagesList.Items.Add("Connection started");
                 connectButton.IsEnabled = false;
@@ -86,21 +95,27 @@ namespace SignalRChatClient
 
                 await connection.InvokeAsync("EnterToGroup",
                     chatRelationshipIdTextBox.Text);
-                
+
             }
             catch (Exception ex)
             {
                 messagesList.Items.Add(ex.Message);
             }
         }
-
         private async void disconnectButton_Click(object sender, RoutedEventArgs e)
         {
-            await connection.InvokeAsync("EscapeFromGruop",
-                    chatRelationshipIdTextBox.Text);
-            await connection.DisposeAsync();
             connectButton.IsEnabled = true;
             disconnectButton.IsEnabled = false;
+            try
+            {
+                await connection.InvokeAsync("EscapeFromGruop",
+                      chatRelationshipIdTextBox.Text);
+                await connection.DisposeAsync();                
+            }
+            catch (Exception ex)
+            {
+                messagesList.Items.Add(ex.Message);
+            }
         }
         private async void messageReadedButton_Click(object sender, RoutedEventArgs e)
         {
