@@ -12,11 +12,13 @@ namespace SignalRChatClient
     public partial class MainWindow : Window
     {
         HubConnection connection;
+        HubConnection notificationConnection;
         //const string _myAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbW9iaWxlcGhvbmUiOiIrMzgwNjcxMzMxODE1IiwibmJmIjoxNjQxODA2NzE3LCJleHAiOjE2NDE4MTAzMTcsImlhdCI6MTY0MTgwNjcxNywiaXNzIjoiVHJha2luZyBPd2wgSXNzdWVyIiwiYXVkIjoiVHJha2luZyBPd2wgQXVkaWVuY2UifQ.waOd6GyhJSnwSDUROMZSQhSlooD2O3t_i0QLAOg3Hog";
         //const string _chatRelationshipId = "1";
         //const string _baseUrl = @"https://api.trackowl.vrealsoft.com";
         const string _baseUrl = @"https://localhost:5001";
         const string _baseUrlChatHub = _baseUrl + @"/chatHub";
+        const string _baseUrlNotificationHub = _baseUrl + @"/notificationHub";
         const string _baseUrlApi = _baseUrl + @"/api/";
         public MainWindow()
         {
@@ -51,8 +53,8 @@ namespace SignalRChatClient
             {
                 this.Dispatcher.Invoke(() =>
                 {
-                   var newMessage = $"{user}: {message}";
-                   messagesList.Items.Add(newMessage);
+                    var newMessage = $"{user}: {message}";
+                    messagesList.Items.Add(newMessage);
                 });
             });
             #endregion
@@ -82,6 +84,22 @@ namespace SignalRChatClient
             });
             await Connect();
         }
+
+        private async Task notificationConnect()
+        {
+            try
+            {
+                await notificationConnection.StartAsync();
+                BT_NotificationDisconnect.IsEnabled = true;
+                BT_GetNotification.IsEnabled = true;
+                BT_NotificationConnect.IsEnabled = false;
+            }
+            catch(Exception ex)
+            {
+                notificationMessagesList.Items.Add(ex.Message);
+            }
+        }
+
         private async Task Connect()
         {
             try
@@ -102,6 +120,76 @@ namespace SignalRChatClient
                 messagesList.Items.Add(ex.Message);
             }
         }
+
+        private async void BT_NotificationConnect_Click(object sender, RoutedEventArgs e)
+        {
+            notificationConnection = new HubConnectionBuilder()
+                .WithUrl(_baseUrlNotificationHub, options =>
+                {
+                    options.AccessTokenProvider = () => Task.FromResult(TB_NotificationAuthToken.Text);
+                })
+                .Build();
+            notificationConnection.Closed += async (errore) =>
+            {
+                notificationMessagesList.Items.Add(errore.Message);
+                await notificationConnect();
+            };
+            //#region snippet_ConnectionOn
+            //notificationConnection.On<string, string>("ReceiveMessage", (user, message) =>
+            //{
+            //    this.Dispatcher.Invoke(() =>
+            //    {
+            //       var newMessage = $"{user}: {message}";
+            //        notificationMessagesList.Items.Add(newMessage);
+            //    });
+            //});
+            //#endregion
+            notificationConnection.On<string>("UserAcceptInvite", (message) =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    var newMessage = $"{message}";
+                    notificationMessagesList.Items.Add(newMessage);
+                });
+            });
+            notificationConnection.On<string>("SendNotifications", (message) =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    var newMessage = $"{message}";
+                    notificationMessagesList.Items.Add(newMessage);
+                });
+            });
+            notificationConnection.On<string>("ViewNotificationOk", (message) =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    var newMessage = $"{message}";
+                    notificationMessagesList.Items.Add(newMessage);
+                });
+            });
+            await notificationConnect();
+        }
+
+        private async void BT_GetNotification_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                await notificationConnection.InvokeAsync("GetNotifications",
+                //$"{{\"PageNumber\": 1, \"PageLength\": 20 }}"
+                @"{}"
+                );
+                await notificationConnection.InvokeAsync("GetActualNotifications",
+                $"{{\"PageNumber\": 1, \"PageLength\": 20 }}"
+                //@"{}"
+                );
+            }
+            catch(Exception ex)
+            {
+                notificationMessagesList.Items.Add(ex.Message);
+            }
+        }
+
         private async void disconnectButton_Click(object sender, RoutedEventArgs e)
         {
             connectButton.IsEnabled = true;
@@ -161,6 +249,7 @@ namespace SignalRChatClient
             }
         }
 
+        
         private void authorizeButton_Click(object sender, RoutedEventArgs e)
         {
             
@@ -174,6 +263,35 @@ namespace SignalRChatClient
             httpContent = new StringContent(content, Encoding.UTF8, "application/json");
             HttpResponseMessage token = httpClient.PostAsync(_baseUrlApi + @"User/smsAuthenticate", httpContent).GetAwaiter().GetResult();
             tokenTextBox.Text = JsonConvert.DeserializeObject<AuthDto>(token.Content.ReadAsStringAsync().GetAwaiter().GetResult()).Token;
+        }
+
+        private async void BT_NotificationDisconnect_Click(object sender, RoutedEventArgs e)
+        {
+            try { await notificationConnection.DisposeAsync(); }
+            catch(Exception ex)
+            {
+                notificationMessagesList.Items.Add(ex.Message);
+            }
+            finally
+            {
+                BT_GetNotification.IsEnabled = false;
+                BT_NotificationConnect.IsEnabled = true;
+                BT_NotificationDisconnect.IsEnabled = false;
+            }
+        }
+
+        private async void BT_ViewNotification_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                await notificationConnection.InvokeAsync("ViewNotification",
+                    @"{ ""InviteNotificationId"":" + TB_NotificationId.Text +
+                    @"}");
+            }
+            catch(Exception ex)
+            {
+                notificationMessagesList.Items.Add(ex.Message);
+            }
         }
     }
 

@@ -12,23 +12,41 @@
             <ColumnDefinition Width="21*"/>
             <ColumnDefinition Width="140*"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="connectButton" Content="Connect" HorizontalAlignment="Left" Margin="275,153,0,0" VerticalAlignment="Top" Width="95" Click="connectButton_Click" Height="41" Grid.Column="2" />
-        <Button x:Name="sendButton" Content="Send Message" HorizontalAlignment="Left" Margin="275,203,0,0" VerticalAlignment="Top" Width="95" Click="sendButton_Click" Height="41" Grid.Column="2" IsEnabled="False"/>
-        <TextBox x:Name="messageTextBox" HorizontalAlignment="Left" Height="41" Margin="82,203,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="311" Grid.ColumnSpan="3"/>
-        <ListBox x:Name="messagesList" HorizontalAlignment="Left" Height="141" Margin="82,260,0,0" VerticalAlignment="Top" Width="311" RenderTransformOrigin="-0.304,0.109" BorderThickness="1" Grid.ColumnSpan="3" BorderBrush="Gainsboro"/>
-        <TextBox x:Name="userTextBox" HorizontalAlignment="Left" Height="41" Margin="82,147,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="311" Grid.ColumnSpan="3" IsEnabled="False"/>
-        <Label Content="User" HorizontalAlignment="Left" Height="31" Margin="39,153,0,0" VerticalAlignment="Top" Width="38"/>
-        <Label Content="Message" HorizontalAlignment="Left" Height="26" Margin="19,210,0,0" VerticalAlignment="Top" Width="58"/>
-        <Button x:Name="messageReadedButton" Content="MessageReaded" HorizontalAlignment="Left" Margin="275,260,0,0" VerticalAlignment="Top" Width="95" Click="messageReadedButton_Click" Height="41" Grid.Column="2" IsEnabled="False"/>
-        <Button x:Name="GetDataButton" Content="GetData" HorizontalAlignment="Left" Margin="275,324,0,0" VerticalAlignment="Top" Width="95" Click="getDataButton_Click" Height="41" Grid.Column="2" />
-        <TextBox x:Name="tokenTextBox" HorizontalAlignment="Left" Height="41" Margin="82,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="311" Grid.ColumnSpan="3"/>
-        <Label Content="Token" HorizontalAlignment="Left" Height="31" Margin="30,100,0,0" VerticalAlignment="Top" Width="47"/>
-        <Button x:Name="disconnectButton" Content="Disconnect" HorizontalAlignment="Left" Margin="275,100,0,0" VerticalAlignment="Top" Width="95" Click="disconnectButton_Click" Height="41" Grid.Column="2" IsEnabled="False"/>
-        <TextBox x:Name="chatRelationshipIdTextBox" HorizontalAlignment="Left" Height="41" Margin="0,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="181" Grid.Column="2" Text="1"/>
-        <Label Content="ChatRelationshipId" HorizontalAlignment="Left" Height="31" Margin="30,53,0,0" VerticalAlignment="Top" Width="119" Grid.ColumnSpan="2"/>
-        <TextBox x:Name="phoneTextBox" HorizontalAlignment="Left" Height="41" Margin="49,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="216" Grid.Column="1" Grid.ColumnSpan="2" Text="+380675555555"/>
-        <Label Content="Phone" HorizontalAlignment="Left" Height="31" Margin="30,10,0,0" VerticalAlignment="Top" Width="119" Grid.ColumnSpan="2"/>
-        <Button x:Name="authorizeButton" Content="Authorize" HorizontalAlignment="Left" Margin="275,10,0,0" VerticalAlignment="Top" Width="95" Click="authorizeButton_Click" Height="41" Grid.Column="2"/>
-        <CheckBox x:Name="sendViaHttpCheckBox" Content="sendViaHttp" HorizontalAlignment="Left" Margin="386,219,0,0" VerticalAlignment="Top" Width="95" Height="17" Grid.Column="2"/>
+        <TabControl Grid.ColumnSpan="3" Margin="0,0,0,26">
+            <TabItem Header="TabItem">
+                <Grid Background="#FFE5E5E5">
+                    <Button x:Name="connectButton" Content="Connect" HorizontalAlignment="Left" Margin="533,154,0,0" VerticalAlignment="Top" Width="95" Click="connectButton_Click" Height="41" />
+                    <Button x:Name="sendButton" Content="Send Message" HorizontalAlignment="Left" Margin="533,204,0,0" VerticalAlignment="Top" Width="95" Click="sendButton_Click" Height="41" IsEnabled="False"/>
+                    <TextBox x:Name="messageTextBox" HorizontalAlignment="Left" Height="41" Margin="126,204,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="311"/>
+                    <ListBox x:Name="messagesList" HorizontalAlignment="Left" Height="141" Margin="126,261,0,0" VerticalAlignment="Top" Width="311" RenderTransformOrigin="-0.304,0.109" BorderThickness="1" BorderBrush="Gainsboro"/>
+                    <TextBox x:Name="userTextBox" HorizontalAlignment="Left" Height="41" Margin="126,148,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="311" IsEnabled="False"/>
+                    <Label Content="User" HorizontalAlignment="Left" Height="31" Margin="83,154,0,0" VerticalAlignment="Top" Width="38"/>
+                    <Label Content="Message" HorizontalAlignment="Left" Height="26" Margin="63,211,0,0" VerticalAlignment="Top" Width="58"/>
+                    <Button x:Name="messageReadedButton" Content="MessageReaded" HorizontalAlignment="Left" Margin="533,261,0,0" VerticalAlignment="Top" Width="95" Click="messageReadedButton_Click" Height="41" IsEnabled="False"/>
+                    <Button x:Name="GetDataButton" Content="GetData" HorizontalAlignment="Left" Margin="533,325,0,0" VerticalAlignment="Top" Width="95" Click="getDataButton_Click" Height="41" />
+                    <TextBox x:Name="tokenTextBox" HorizontalAlignment="Left" Height="41" Margin="126,95,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="311"/>
+                    <Label Content="Token" HorizontalAlignment="Left" Height="31" Margin="74,101,0,0" VerticalAlignment="Top" Width="47"/>
+                    <Button x:Name="disconnectButton" Content="Disconnect" HorizontalAlignment="Left" Margin="533,101,0,0" VerticalAlignment="Top" Width="95" Click="disconnectButton_Click" Height="41" IsEnabled="False"/>
+                    <TextBox x:Name="chatRelationshipIdTextBox" HorizontalAlignment="Left" Height="41" Margin="258,48,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="181" Text="1"/>
+                    <Label Content="ChatRelationshipId" HorizontalAlignment="Left" Height="31" Margin="74,54,0,0" VerticalAlignment="Top" Width="119"/>
+                    <TextBox x:Name="phoneTextBox" HorizontalAlignment="Left" Height="41" Margin="222,5,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="216" Text="+380675555555"/>
+                    <Label Content="Phone" HorizontalAlignment="Left" Height="31" Margin="74,11,0,0" VerticalAlignment="Top" Width="119"/>
+                    <Button x:Name="authorizeButton" Content="Authorize" HorizontalAlignment="Left" Margin="533,11,0,0" VerticalAlignment="Top" Width="95" Click="authorizeButton_Click" Height="41"/>
+                    <CheckBox x:Name="sendViaHttpCheckBox" Content="sendViaHttp" HorizontalAlignment="Left" Margin="644,220,0,0" VerticalAlignment="Top" Width="95" Height="17"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Notification">
+                <Grid Background="#FFE5E5E5">
+                    <TextBox x:Name="TB_NotificationAuthToken" HorizontalAlignment="Left" Margin="81,42,0,0" TextWrapping="Wrap" Text="AuthToken" VerticalAlignment="Top" Width="120"/>
+                    <Button x:Name="BT_NotificationConnect" Content="Connect" HorizontalAlignment="Left" Margin="243,40,0,0" VerticalAlignment="Top" Click="BT_NotificationConnect_Click"/>
+                    <Button x:Name="BT_NotificationDisconnect" IsEnabled="false" Content="Disconnect" HorizontalAlignment="Left" Margin="243,65,0,0" VerticalAlignment="Top" Click="BT_NotificationDisconnect_Click"/>
+                    <Button x:Name="BT_GetNotification" Content="GetNotification" IsEnabled="False" HorizontalAlignment="Left" Margin="243,90,0,0" VerticalAlignment="Top" Click="BT_GetNotification_Click"/>
+                    <TextBox x:Name="TB_NotificationId" HorizontalAlignment="Left" Margin="89,112,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+                    <Button x:Name="BT_ViewNotification" Content="ViewNotification" HorizontalAlignment="Left" Margin="243,121,0,0" VerticalAlignment="Top" Click="BT_ViewNotification_Click"/>
+                    <ListBox x:Name="notificationMessagesList" HorizontalAlignment="Left" Height="233" Margin="129,155,0,0" VerticalAlignment="Top" Width="584" RenderTransformOrigin="-0.304,0.109" BorderThickness="1" BorderBrush="Gainsboro"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
     </Grid>
 </Window>
