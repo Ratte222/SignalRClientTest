@@ -45,7 +45,7 @@ namespace SignalRChatClient
                 .Build();
             connection.Closed += async (errore) =>
             {
-                messagesList.Items.Add(errore.Message);
+                messagesList.Items.Add(errore?.Message);
                 await Connect();
             };
             #region snippet_ConnectionOn
@@ -131,8 +131,8 @@ namespace SignalRChatClient
                 .Build();
             notificationConnection.Closed += async (errore) =>
             {
-                notificationMessagesList.Items.Add(errore.Message);
-                await notificationConnect();
+                notificationMessagesList.Items.Add(errore?.Message);
+                //await notificationConnect();
             };
             //#region snippet_ConnectionOn
             //notificationConnection.On<string, string>("ReceiveMessage", (user, message) =>
@@ -145,6 +145,14 @@ namespace SignalRChatClient
             //});
             //#endregion
             notificationConnection.On<string>("UserAcceptInvite", (message) =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    var newMessage = $"{message}";
+                    notificationMessagesList.Items.Add(newMessage);
+                });
+            });
+            notificationConnection.On<string>("SendErrore", (message) =>
             {
                 this.Dispatcher.Invoke(() =>
                 {
