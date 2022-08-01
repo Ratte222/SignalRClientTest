@@ -131,7 +131,7 @@ namespace SignalRChatClient
                 .Build();
             notificationConnection.Closed += async (errore) =>
             {
-                notificationMessagesList.Items.Add(errore?.Message);
+                notificationMessagesList.Items.Add($"Close connection {errore?.Message}");
                 //await notificationConnect();
             };
             //#region snippet_ConnectionOn
@@ -148,15 +148,16 @@ namespace SignalRChatClient
             {
                 this.Dispatcher.Invoke(() =>
                 {
-                    var newMessage = $"{message}";
+                    var newMessage = $"UserAcceptInvite: \r\n {message} \r\n";
                     notificationMessagesList.Items.Add(newMessage);
+                    TB_InviteNotification.Text += newMessage;
                 });
             });
             notificationConnection.On<string>("SendErrore", (message) =>
             {
                 this.Dispatcher.Invoke(() =>
                 {
-                    var newMessage = $"{message}";
+                    var newMessage = $"SendErrore \r\n {message}";
                     notificationMessagesList.Items.Add(newMessage);
                 });
             });
@@ -164,16 +165,31 @@ namespace SignalRChatClient
             {
                 this.Dispatcher.Invoke(() =>
                 {
-                    var newMessage = $"{message}";
-                    notificationMessagesList.Items.Add(newMessage);
+                    notificationMessagesList.Items.Add(message);
+                    TB_InviteNotification.Text += $"SendNotifications: \r\n {message}\r\n";
                 });
             });
             notificationConnection.On<string>("ViewNotificationOk", (message) =>
             {
                 this.Dispatcher.Invoke(() =>
                 {
-                    var newMessage = $"{message}";
+                    var newMessage = $"ViewNotificationOk: \r\n {message}";
                     notificationMessagesList.Items.Add(newMessage);
+                });
+            });
+            notificationConnection.On<string>("ViewNotificationsOk", (message) =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    var newMessage = $"ViewNotificationsOk: \r\n {message}\r\n";
+                    TB_InviteNotification.Text +=newMessage;
+                });
+            });
+            notificationConnection.On<string>("CommonInfo", (message) =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    TB_InviteNotification.Text += $"CommonInfo: \r\n {message}\r\n";
                 });
             });
             await notificationConnect();
@@ -292,7 +308,10 @@ namespace SignalRChatClient
         {
             try
             {
-                await notificationConnection.InvokeAsync("ViewNotification",
+                //await notificationConnection.InvokeAsync("ViewNotification",
+                //    @"{ ""InviteNotificationId"":" + TB_NotificationId.Text +
+                //    @"}");
+                await notificationConnection.InvokeAsync("ViewAllInviteNotificationUpTo",
                     @"{ ""InviteNotificationId"":" + TB_NotificationId.Text +
                     @"}");
             }

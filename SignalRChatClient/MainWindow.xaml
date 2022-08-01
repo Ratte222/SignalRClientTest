@@ -5,12 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SignalRChatClient"
         mc:Ignorable="d"
-        Title="SignalR Chat WPF Client" Height="436" Width="782">
+        Title="SignalR Chat WPF Client" Height="936" Width="1152">
     <Grid Margin="0,0,2,-21">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="32*"/>
-            <ColumnDefinition Width="21*"/>
-            <ColumnDefinition Width="140*"/>
+
         </Grid.ColumnDefinitions>
         <TabControl Grid.ColumnSpan="3" Margin="0,0,0,26">
             <TabItem Header="TabItem">
@@ -43,7 +41,8 @@
                     <Button x:Name="BT_GetNotification" Content="GetNotification" IsEnabled="False" HorizontalAlignment="Left" Margin="243,90,0,0" VerticalAlignment="Top" Click="BT_GetNotification_Click"/>
                     <TextBox x:Name="TB_NotificationId" HorizontalAlignment="Left" Margin="89,112,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
                     <Button x:Name="BT_ViewNotification" Content="ViewNotification" HorizontalAlignment="Left" Margin="243,121,0,0" VerticalAlignment="Top" Click="BT_ViewNotification_Click"/>
-                    <ListBox x:Name="notificationMessagesList" HorizontalAlignment="Left" Height="233" Margin="129,155,0,0" VerticalAlignment="Top" Width="584" RenderTransformOrigin="-0.304,0.109" BorderThickness="1" BorderBrush="Gainsboro"/>
+                    <ListBox x:Name="notificationMessagesList" HorizontalAlignment="Left" Height="722" Margin="129,155,0,0" VerticalAlignment="Top" Width="584" RenderTransformOrigin="-0.304,0.109" BorderThickness="1" BorderBrush="Gainsboro"/>
+                    <TextBox x:Name="TB_InviteNotification" HorizontalAlignment="Left" Margin="718,19,0,0" TextWrapping="NoWrap" Text="TextBox" VerticalAlignment="Top" Width="416" Height="858"/>
                 </Grid>
             </TabItem>
         </TabControl>
